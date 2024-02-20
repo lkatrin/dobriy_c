@@ -1,0 +1,40 @@
+/*Продолжите программу. Необходимо в массиве buffer поменять местами первую половину прочитанных данных со второй половиной.
+Обратите внимание, что число прочитанных данных определяется переменной count.
+Причем, если count четное, то первая половина меняется со второй целиком, а если count нечетное,
+то центральный элемент должен оставаться на своем месте без изменений.
+Выведите в консоль в одну строчку через пробел первые count элементов полученного массива buffer.
+P. S. Дополнительных массивов в программе не создавать.*/
+
+#include <stdio.h>
+
+#define SIZE_BUFFER 128
+
+int main(void)
+{
+    int buffer[SIZE_BUFFER];
+    size_t count = 0;
+    size_t sz_buffer = sizeof(buffer) / sizeof(*buffer);
+
+    while(count < sz_buffer && scanf("%d", &buffer[count]) == 1)
+        count++;
+
+    // Заданная логика для обмена половин массива
+    size_t i;
+    size_t half_count = count / 2;
+    size_t offset = count % 2 == 0 ? 0 : 1; // Если число элементов нечетное, то центральный элемент остается на своем месте
+    for (i = 0; i < half_count; ++i) {
+        int temp = buffer[i];
+        buffer[i] = buffer[half_count + offset + i];
+        buffer[half_count + offset + i] = temp;
+    }
+
+    // Вывод значений массива buffer
+    for (i = 0; i < count; ++i) {
+        printf("%d ", buffer[i]);
+    }
+    printf("\n");
+
+    return 0;
+}
+
+/*Памятка: условие ? значение_если_истина : значение_если_ложь;*/
